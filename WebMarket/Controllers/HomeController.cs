@@ -13,19 +13,30 @@ namespace WebMarket.Controllers
             new Employee { Id = 3, LastName = "Сидоров", FirstName = "Сидор", Patronymic = "Сидорович", Age = 46 }
         };
 
+        private Employee GetEmployeeById(int id)
+        {
+            return _employees.Find(empployee => empployee.Id == id);
+        }
+
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult SecondAction(string id)
-        {
-            return Content($"Action with value id: {id}");
-        }
-
         public IActionResult Employees()
         {
             return View(_employees);
+        }
+
+        public IActionResult Details(int id)
+        {
+            var employee = GetEmployeeById(id);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            return View(employee);
         }
     }
 }

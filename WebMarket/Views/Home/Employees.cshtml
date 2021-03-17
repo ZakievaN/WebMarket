@@ -1,6 +1,9 @@
 ﻿@model IEnumerable<WebMarket.Models.Employee>
 
 <!DOCTYPE html>
+@{
+    @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+}
 
 <html>
 <head>
@@ -18,6 +21,7 @@
                 <th>Имя</th>
                 <th>Отчество</th>
                 <th>Возраст</th>
+                <th>Карта сотрудника</th>
             </tr>
         </thead>
         <tbody>
@@ -29,6 +33,7 @@
                     <td>@employee.FirstName</td>
                     <td>@employee.Patronymic</td>
                     <td>@employee.Age</td>
+                    <td><a asp-controller="Home" asp-action="Details" asp-route-id="@employee.Id">Детали</a></td>
                 </tr>
             }
         </tbody>

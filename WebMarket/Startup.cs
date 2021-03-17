@@ -19,7 +19,7 @@ namespace WebMarket
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -31,6 +31,9 @@ namespace WebMarket
                 app.UseDeveloperExceptionPage();
             }
 
+            //заставляет сервер отдавать статическое содержимое
+            app.UseStaticFiles();
+
             //маршрутизация приложения (к какому ресурсу приложения обратился браузер)
             app.UseRouting();
 
@@ -38,10 +41,14 @@ namespace WebMarket
             app.UseEndpoints(endpoints =>
             {
                 //запрос - ответ ("/" - _configuration["Greetings"])
-                endpoints.MapGet("/", async context =>
+                endpoints.MapGet("/Greetings", async context =>
                 {
                     await context.Response.WriteAsync(_configuration["Greetings"]);
                 });
+
+                endpoints.MapControllerRoute(
+                    "default" /* название маршрута*/ ,
+                    "{controller=Home}/{action=Index}/{id?}" /* шаблон сопоставления адреса из адресной строки с основными понятиями MVC */ )
             });
         }
     }

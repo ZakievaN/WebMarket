@@ -10,7 +10,7 @@ namespace WebMarket.Controllers
     {
         public IActionResult Index()
         {
-            return Content("First controller action");
+            return View();
         }
 
         public IActionResult SecondAction(string id)

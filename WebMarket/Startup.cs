@@ -48,7 +48,7 @@ namespace WebMarket
 
                 endpoints.MapControllerRoute(
                     "default" /* название маршрута*/ ,
-                    "{controller=Home}/{action=Index}/{id?}" /* шаблон сопоставления адреса из адресной строки с основными понятиями MVC */ )
+                    "{controller=Home}/{action=Index}/{id?}" /* шаблон сопоставления адреса из адресной строки с основными понятиями MVC */ );
             });
         }
     }

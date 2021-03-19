@@ -1,0 +1,31 @@
+﻿@model WebMarket.Models.Employee
+
+<!DOCTYPE html>
+@{
+    @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Детали</title>
+</head>
+<body>
+
+    <h3> Карточка сотрудника </h3>
+
+    <p>Идентификатор: @Model.Id</p>
+    <p>Фамилия: @Model.LastName</p>
+    <p>Имя: @Model.FirstName</p>
+    <p>Отчество: @Model.Patronymic</p>
+    <p>Возраст: @Model.Age</p>
+    <p>Год рождения: @Model.BirthYear </p> 
+
+    <p>
+
+        <a asp-controller="Home" asp-action="Employees">Назад к списку</a>
+
+    </p>
+
+</body>
+</html>

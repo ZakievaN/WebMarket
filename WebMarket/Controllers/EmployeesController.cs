@@ -3,18 +3,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebMarket.Data;
 using WebMarket.Models;
 
 namespace WebMarket.Controllers
 {
     public class EmployeesController : Controller
     {
-        private static readonly List<Employee> _employees = new()
+        private readonly List<Employee> _employees;
+
+        public EmployeesController()
         {
-            new Employee { Id = 1, LastName = "Иванов", FirstName = "Иван", Patronymic = "Иванович", Age = 19 },
-            new Employee { Id = 2, LastName = "Петров", FirstName = "Петр", Patronymic = "Петрович", Age = 25 },
-            new Employee { Id = 3, LastName = "Сидоров", FirstName = "Сидор", Patronymic = "Сидорович", Age = 46 }
-        };
+            _employees = TestData.Employees;
+        }
 
         public IActionResult Index()
         {
@@ -39,7 +40,7 @@ namespace WebMarket.Controllers
 
         private Employee GetEmployeeById(int id)
         {
-            return _employees.Find(empployee => empployee.Id == id);
+            return _employees.FirstOrDefault(empployee => empployee.Id == id);
         }
     }
 }

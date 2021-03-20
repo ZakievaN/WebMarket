@@ -1,19 +1,14 @@
 ﻿@model IEnumerable<WebMarket.Models.Employee>
 
-<!DOCTYPE html>
 @{
-    @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+    ViewData["Title"] = "Index";
 }
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Сотрудники</title>
-</head>
-<body>
+<div class="container">
+
     <h3> Сотрудники </h3>
 
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 <th>#</th>
@@ -33,7 +28,7 @@
                     <td>@employee.FirstName</td>
                     <td>@employee.Patronymic</td>
                     <td>@employee.Age</td>
-                    <td><a asp-controller="Home" asp-action="Details" asp-route-id="@employee.Id">Детали</a></td>
+                    <td><a asp-controller="Employees" asp-action="Details" asp-route-id="@employee.Id">Детали</a></td>
                 </tr>
             }
         </tbody>
@@ -42,9 +37,9 @@
 
     <p>
 
-        <a href ="~/">Домой</a>
+        <a asp-controller ="Home" asp-action="Index" >Домой</a>
 
     </p>
 
-</body>
-</html>
+
+</div>

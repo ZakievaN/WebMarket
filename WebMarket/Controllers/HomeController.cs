@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using WebMarket.Models;
 
 namespace WebMarket.Controllers
 {

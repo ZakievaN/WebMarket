@@ -14,12 +14,12 @@ namespace WebMarket.Models
 
         public int Age { get; set; }
 
-        public int BirthYear 
+        public int BirthYear
         {
             get
             {
-                return DateTime.Now.Subtract(new TimeSpan(Age > 0 ? Age * 365: 0, 0, 0, 0)).Year;
-            } 
+                return DateTime.Now.Subtract(new TimeSpan(Age > 0 ? Age * 365 : 0, 0, 0, 0)).Year;
+            }
         }
     }
 }

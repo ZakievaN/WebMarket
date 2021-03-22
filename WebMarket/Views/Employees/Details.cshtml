@@ -42,11 +42,15 @@
             <p>Год рождения: @Model.BirthYear </p>
 
             <p>
-                <input type="submit" value="Отправить" />
+                <input type="submit" value="Сохранить" />
             </p>
         </form>
 
-        
+        <form asp-controller="Employees"
+              asp-action="Remove"
+              asp-route-id="@Model.Id">
+            <button> Удалить сотрудника </button>
+        </form>
 
         <p>
 

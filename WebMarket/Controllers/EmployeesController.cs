@@ -56,5 +56,18 @@ namespace WebMarket.Controllers
 
             return View("Details", employee);
         }
+
+        public IActionResult Remove(int id)
+        {
+            var employee = GetEmployeeById(id);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            _employees.Remove(employee);
+
+            return RedirectToAction("Index", _employees);
+        }
     }
 }

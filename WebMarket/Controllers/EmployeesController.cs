@@ -40,5 +40,21 @@ namespace WebMarket.Controllers
         {
             return _employees.FirstOrDefault(empployee => empployee.Id == id);
         }
+
+        public IActionResult Save(int id, Employee emp)
+        {
+            var employee = GetEmployeeById(id);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            employee.LastName = emp.LastName;
+            employee.FirstName = emp.FirstName;
+            employee.Patronymic = emp.Patronymic;
+            employee.Age = emp.Age;
+
+            return View("Details", employee);
+        }
     }
 }

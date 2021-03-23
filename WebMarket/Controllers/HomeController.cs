@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebMarket.Infrastructure.Conventions;
 
 namespace WebMarket.Controllers
 {
+    [ActionDescription("Главный контроллер")]
     public class HomeController : Controller
     {
+        [ActionDescription("Главное действие")]
         public IActionResult Index()
         {
             return View();

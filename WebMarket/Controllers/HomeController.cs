@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using WebMarket.Infrastructure.Conventions;
+using WebMarket.Infrastructure.Filters;
 
 namespace WebMarket.Controllers
 {
@@ -7,10 +9,13 @@ namespace WebMarket.Controllers
     public class HomeController : Controller
     {
         [ActionDescription("Главное действие")]
+        [AddHeader("Test", "Header value")]
         public IActionResult Index()
         {
             return View();
         }
+
+        public IActionResult Throw() => throw new ApplicationException("Test Error");
 
         public IActionResult Error404()
         {

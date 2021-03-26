@@ -40,16 +40,32 @@ namespace WebMarket.Controllers
             return View(employee);
         }
 
-        public IActionResult Remove(int id)
+        public IActionResult Delete(int id)
         {
-            bool isDelete = _employeesData.Delete(id);
+            if (id == 0) return BadRequest();
 
-            if (!isDelete)
+            var employee = _employeesData.Get(id);
+
+            if (employee is null)
             {
                 return NotFound();
             }
 
-            return RedirectToAction("Index", _employees);
+            return View(new EmployeeViewModel
+            {
+                Id = employee.Id,
+                LastName = employee.LastName,
+                FirstName = employee.FirstName,
+                Patronymic = employee.Patronymic,
+                Age = employee.Age
+            });
+        }
+
+        [HttpPost]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            _employeesData.Delete(id);
+            return RedirectToAction("Index");
         }
 
         public IActionResult Edit(int? id)

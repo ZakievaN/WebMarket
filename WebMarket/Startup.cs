@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebMarket.Infrastructure.Conventions;
+using WebMarket.Infrastructure.Services;
+using WebMarket.Infrastructure.Services.Interfaces;
 
 namespace WebMarket
 {
@@ -19,6 +21,8 @@ namespace WebMarket
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IEmployeesData, InMemoryEmployeesData>();
+
             services
                 .AddControllersWithViews(
                     mvc =>

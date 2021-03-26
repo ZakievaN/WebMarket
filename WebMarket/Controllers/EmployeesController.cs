@@ -2,22 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using WebMarket.Data;
+using WebMarket.Infrastructure.Services.Interfaces;
 using WebMarket.Models;
 
 namespace WebMarket.Controllers
 {
     public class EmployeesController : Controller
     {
+        private IEmployeesData _employeesData;
+
         private readonly List<Employee> _employees;
 
-        public EmployeesController()
+        public EmployeesController(IEmployeesData employeesData)
         {
-            _employees = TestData.Employees;
+            _employeesData = employeesData;
         }
 
         public IActionResult Index()
         {
-            return View(_employees);
+            return View(_employeesData.Get());
         }
 
         public IActionResult Employees()
@@ -27,7 +30,7 @@ namespace WebMarket.Controllers
 
         public IActionResult Details(int id)
         {
-            var employee = GetEmployeeById(id);
+            var employee = _employeesData.Get(id);
             if (employee == null)
             {
                 return NotFound();

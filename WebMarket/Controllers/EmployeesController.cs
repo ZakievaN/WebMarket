@@ -52,9 +52,13 @@ namespace WebMarket.Controllers
             return RedirectToAction("Index", _employees);
         }
 
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int? id)
         {
-            var employee = _employeesData.Get(id);
+            if (id is null)
+                return View(new EmployeeViewModel());
+
+            var employee = _employeesData.Get((int)id);
+
             if (employee == null)
             {
                 return NotFound();
@@ -81,6 +85,15 @@ namespace WebMarket.Controllers
                 Patronymic = model.Patronymic,
                 Age = model.Age
             };
+
+            if (employee.Id == 0)
+            {
+                _employeesData.Add(employee);
+            }
+            else
+            {
+                _employeesData.Update(employee);    
+            }
 
             _employeesData.Update(employee);
 

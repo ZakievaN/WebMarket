@@ -57,7 +57,7 @@ namespace WebMarket.Infrastructure.Services
 
         public IEnumerable<Employee> Get()
         {
-            throw new NotImplementedException();
+            return _employees;
         }
 
         public Employee Get(int id)

@@ -15,16 +15,40 @@
     <div class="container">
         <h3> Карточка сотрудника </h3>
 
-        <p>Идентификатор: @Model.Id</p>
-        <p>Фамилия: @Model.LastName</p>
-        <p>Имя: @Model.FirstName</p>
-        <p>Отчество: @Model.Patronymic</p>
-        <p>Возраст: @Model.Age</p>
-        <p>Год рождения: @Model.BirthYear </p>
+        <form>
+
+            <p>
+                <label>Идентификатор:</label> @Model.Id
+            </p>
+
+            <p>
+                <label>Фамилия:</label> @Model.LastName
+            </p>
+
+            <p>
+                <label>Имя:</label> @Model.FirstName
+            </p>
+
+            <p>
+                <label>Отчество:</label> @Model.Patronymic
+            </p>
+
+            <p>
+                <label>Возраст:</label> @Model.Age
+            </p>
+
+            <p>
+                <label>Год рождения:</label> @Model.BirthYear
+            </p>
+
+        </form>
 
         <p>
+            <a asp-action="Delete" asp-route-Id="@Model.Id" class="btn btn-danger"> Удалить </a>
 
-            <a asp-action="Index">Назад к списку</a>
+            <a asp-action="Edit" asp-route-Id="@Model.Id" class="btn btn-default"> Редактировать </a>
+
+            <a asp-action="Index" class="btn btn-info">Назад к списку</a>
 
         </p>
     </div>

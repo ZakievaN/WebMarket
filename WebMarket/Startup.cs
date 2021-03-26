@@ -4,21 +4,32 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebMarket.Infrastructure.Conventions;
+using WebMarket.Infrastructure.Services;
+using WebMarket.Infrastructure.Services.Interfaces;
 
 namespace WebMarket
 {
-    public class Startup
+    public record Startup(IConfiguration configuration)
     {
-        private IConfiguration _configuration { get; }
-
-        public Startup(IConfiguration Configuration)
-        {
-            _configuration = Configuration;
-        }
+        //private IConfiguration _configuration { get; }
+        //
+        //public Startup(IConfiguration Configuration)
+        //{
+        //    _configuration = Configuration;
+        //}
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews()
+            services.AddTransient<IEmployeesData, InMemoryEmployeesData>();
+
+            services
+                .AddControllersWithViews(
+                    mvc =>
+                    {
+                        //mvc.Conventions.Add(new ActionDescriptionAttribute("123"));
+                        mvc.Conventions.Add(new ApplicationConvention());
+                    })
                 .AddRazorRuntimeCompilation();
         }
 
@@ -42,7 +53,7 @@ namespace WebMarket
                 //  Запрос - ответ ("/" - _configuration["Greetings"])
                 endpoints.MapGet("/Greetings", async context =>
                 {
-                    await context.Response.WriteAsync(_configuration["Greetings"]);
+                    await context.Response.WriteAsync(configuration["Greetings"]);
                 });
 
                 endpoints.MapControllerRoute(

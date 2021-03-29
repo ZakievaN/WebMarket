@@ -8,8 +8,19 @@ using WebMarketDomain.Entities.Interfaces;
 
 namespace WebMarketDomain.Entities
 {
-    public class Brand : NamedEntity, IOrderEntity
+    public class Product : NamedEntity, IOrderEntity
     {
         public int Order { get; set; }
+
+        public int SectionId { get; set; }
+
+        public int? BrandId { get; set; }
+
+        public string ImageUrl { get; set; }
+
+        public decimal Price { get; set; }
     }
+
+    
+
 }

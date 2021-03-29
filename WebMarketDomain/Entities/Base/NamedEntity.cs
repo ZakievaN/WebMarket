@@ -2,7 +2,7 @@
 
 namespace WebMarketDomain.Entities.Base
 {
-    public abstract class NemedEntity : Entity, INameEntity
+    public abstract class NamedEntity : Entity, INameEntity
     {
         public string Name { get; set; }
     }

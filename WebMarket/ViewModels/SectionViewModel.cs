@@ -15,6 +15,6 @@ namespace WebMarket.ViewModels
 
         public SectionViewModel Parent { get; set; }
 
-        public List<SectionViewModel> ChildSections { get; set; }
+        public List<SectionViewModel> ChildSections { get; set; } = new();
     }
 }

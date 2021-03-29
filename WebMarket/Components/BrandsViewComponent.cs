@@ -1,18 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using WebMarket.Infrastructure.Services.Interfaces;
 using WebMarket.ViewModels;
 
 namespace WebMarket.Components
 {
-    public class BrandsViewComponents
+    public class BrandsViewComponent : ViewComponent
     {
         private readonly IProductData _ProductData;
 
-        public BrandsViewComponents(IProductData productData)
+        public BrandsViewComponent(IProductData productData)
         {
             _ProductData = productData;
         }

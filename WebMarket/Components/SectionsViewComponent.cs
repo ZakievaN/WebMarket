@@ -17,13 +17,18 @@ namespace WebMarket.Components
             _ProductData = productData;
         }
 
-        public IViewComponentResult Invoke ()
+        public IViewComponentResult Invoke()
+        {
+            return View(GetSections());
+        }
+
+        private IEnumerable<SectionViewModel> GetSections()
         {
             var sections = _ProductData.GetSections();
 
             var parent_sections = sections.Where(s => s.ParentId is null);
 
-            var parent_sections_view = parent_sections.
+            var parent_sections_views = parent_sections.
                 Select(s => new SectionViewModel
                 {
                     Id = s.Id,
@@ -31,8 +36,9 @@ namespace WebMarket.Components
                     Order = s.Order
                 }).ToList();
 
-            foreach(var parent_section in parent_sections_view)
+            for (int i = 0; i < parent_sections_views.Count; i++)
             {
+                SectionViewModel parent_section = parent_sections_views[i];
                 var child = sections.Where(s => s.ParentId == parent_section.Id);
 
                 foreach (var child_section in child)
@@ -44,10 +50,10 @@ namespace WebMarket.Components
                         Parent = parent_section
                     });
 
-                parent_sections_view.Sort((a, b) => Comparer<int>.Default.Compare(a.Order, b.Order));
+                parent_sections_views.Sort((a, b) => Comparer<int>.Default.Compare(a.Order, b.Order));
             }
 
-            return View(parent_sections_view);
+            return parent_sections_views;
         }
     }
 }

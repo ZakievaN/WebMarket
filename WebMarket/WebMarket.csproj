@@ -13,4 +13,8 @@
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WebMarketDomain\WebMarketDomain.csproj" />
+  </ItemGroup>
+
 </Project>

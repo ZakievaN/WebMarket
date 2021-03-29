@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using WebMarketDomain;
 using WebMarketDomain.Entities;
 
 namespace WebMarket.Infrastructure.Services.Interfaces
@@ -11,5 +9,7 @@ namespace WebMarket.Infrastructure.Services.Interfaces
         IEnumerable<Section> GetSections();
 
         IEnumerable<Brand> GetBrands();
+
+        IEnumerable<Product> GetProducts( ProductFilter filter = null);
     }
 }

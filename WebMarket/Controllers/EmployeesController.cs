@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
-using WebMarket.Data;
 using WebMarket.Infrastructure.Services.Interfaces;
 using WebMarket.Models;
 using WebMarket.ViewModels;
@@ -11,8 +8,6 @@ namespace WebMarket.Controllers
     public class EmployeesController : Controller
     {
         private IEmployeesData _employeesData;
-
-        private readonly List<Employee> _employees;
 
         public EmployeesController(IEmployeesData employeesData)
         {
@@ -26,7 +21,7 @@ namespace WebMarket.Controllers
 
         public IActionResult Employees()
         {
-            return View(_employees);
+            return View(_employeesData.Get());
         }
 
         public IActionResult Details(int id)
@@ -68,10 +63,13 @@ namespace WebMarket.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
         public IActionResult Edit(int? id)
         {
             if (id is null)
+            {
                 return View(new EmployeeViewModel());
+            }
 
             var employee = _employeesData.Get((int)id);
 
@@ -93,6 +91,11 @@ namespace WebMarket.Controllers
         [HttpPost]
         public IActionResult Edit(EmployeeViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             var employee = new Employee
             {
                 Id = model.Id,
@@ -110,8 +113,6 @@ namespace WebMarket.Controllers
             {
                 _employeesData.Update(employee);    
             }
-
-            _employeesData.Update(employee);
 
             return RedirectToAction("Index");
         }

@@ -11,5 +11,7 @@ namespace WebMarketDomain.Entities
     public class Brand : NamedEntity, IOrderEntity
     {
         public int Order { get; set; }
+
+        public ICollection<Product> Products { get; set; }
     }
 }

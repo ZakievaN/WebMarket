@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebMarket.DAL.Context;
 using WebMarket.Infrastructure.Conventions;
 using WebMarket.Infrastructure.Services;
 using WebMarket.Infrastructure.Services.Interfaces;
@@ -21,6 +23,9 @@ namespace WebMarket
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<WebMarketDB>(opt => 
+            opt.UseSqlServer(configuration.GetConnectionString("Default")));
+
             services.AddTransient<IEmployeesData, InMemoryEmployeesData>();
             services.AddTransient<IProductData, InMemoryProductData>();
 

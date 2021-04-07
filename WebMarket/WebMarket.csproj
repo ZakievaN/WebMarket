@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WebMarket.DAL\WebMarket.DAL.csproj" />
     <ProjectReference Include="..\WebMarketDomain\WebMarketDomain.csproj" />
   </ItemGroup>
 

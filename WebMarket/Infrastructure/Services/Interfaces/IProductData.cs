@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using WebMarketDomain;
-using WebMarketDomain.Entities;
+using WebMarketDomain.Entityes;
 
 namespace WebMarket.Infrastructure.Services.Interfaces
 {

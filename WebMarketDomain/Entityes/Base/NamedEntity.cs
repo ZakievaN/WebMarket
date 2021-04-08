@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using WebMarketDomain.Entities.Interfaces;
+using WebMarketDomain.Entityes.Interfaces;
 
-namespace WebMarketDomain.Entities.Base
+namespace WebMarketDomain.Entityes.Base
 {
     public abstract class NamedEntity : Entity, INameEntity
     {

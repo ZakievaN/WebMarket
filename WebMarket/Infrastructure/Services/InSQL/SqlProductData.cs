@@ -4,7 +4,7 @@ using System.Linq;
 using WebMarket.DAL.Context;
 using WebMarket.Infrastructure.Services.Interfaces;
 using WebMarketDomain;
-using WebMarketDomain.Entities;
+using WebMarketDomain.Entityes;
 
 namespace WebMarket.Infrastructure.Services.InSQL
 {

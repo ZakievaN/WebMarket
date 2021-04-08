@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebMarketDomain.Entities.Base;
-using WebMarketDomain.Entities.Interfaces;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using WebMarketDomain.Entityes;
+using WebMarketDomain.Entityes.Base;
+using WebMarketDomain.Entityes.Interfaces;
 
-namespace WebMarketDomain.Entities
+namespace WebMarketDomain.Entityes
 {
     public class Product : NamedEntity, IOrderEntity
     {

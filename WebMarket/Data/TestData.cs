@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using WebMarket.Models;
-using WebMarketDomain.Entities;
+using WebMarketDomain.Entityes;
 
 namespace WebMarket.Data
 {

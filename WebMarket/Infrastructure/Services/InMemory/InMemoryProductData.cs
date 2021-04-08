@@ -2,7 +2,7 @@
 using System.Linq;
 using WebMarket.Data;
 using WebMarketDomain;
-using WebMarketDomain.Entities;
+using WebMarketDomain.Entityes;
 
 namespace WebMarket.Infrastructure.Services.InMemory
 {

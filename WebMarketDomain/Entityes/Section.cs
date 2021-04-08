@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using WebMarketDomain.Entities.Base;
-using WebMarketDomain.Entities.Interfaces;
+using WebMarketDomain.Entityes.Base;
+using WebMarketDomain.Entityes.Interfaces;
 
-namespace WebMarketDomain.Entities
+namespace WebMarketDomain.Entityes
 {
     public class Section : NamedEntity, IOrderEntity
     {

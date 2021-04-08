@@ -9,7 +9,7 @@ using System;
 using WebMarket.DAL.Context;
 using WebMarket.Data;
 using WebMarket.Infrastructure.Conventions;
-using WebMarket.Infrastructure.Services;
+using WebMarket.Infrastructure.Services.InMemory;
 using WebMarket.Infrastructure.Services.Interfaces;
 
 namespace WebMarket

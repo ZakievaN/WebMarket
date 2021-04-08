@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using WebMarket.DAL.Context;
 using WebMarket.Infrastructure.Conventions;
 using WebMarket.Infrastructure.Services;
@@ -24,7 +25,10 @@ namespace WebMarket
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<WebMarketDB>(opt => 
-            opt.UseSqlServer(configuration.GetConnectionString("Default")));
+            opt.UseSqlServer(configuration.GetConnectionString("Default"))
+            .EnableSensitiveDataLogging(true)
+            //.LogTo(str => Console.WriteLine())
+            );
 
             services.AddTransient<IEmployeesData, InMemoryEmployeesData>();
             services.AddTransient<IProductData, InMemoryProductData>();

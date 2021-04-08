@@ -81,7 +81,7 @@ namespace WebMarket.Controllers
 
             if (login_result.Succeeded)
             {
-                return LocalRedirect(model.ReturnUrl);
+                return LocalRedirect(model.ReturnUrl ?? "/");
             }
 
             ModelState.AddModelError("", "Неверное имя пользователя или пароль!");
@@ -95,8 +95,10 @@ namespace WebMarket.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult AccessDenied()
+        [HttpGet]
+        public IActionResult AccessDenied(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
     }

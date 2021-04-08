@@ -35,14 +35,24 @@
                 <td>@employee.Patronymic</td>
                 <td>@employee.Age</td>
                 <td><a asp-controller="Employees" asp-action="Details" asp-route-id="@employee.Id">Детали</a></td>
-                <td><a asp-controller="Employees" asp-action="Edit" asp-route-id="@employee.Id">
-                    <i class="fa fa-edit"></i></a></td>
-                <td> 
-                    <form asp-action="DeleteConfirmed" asp-route-id ="@employee.Id">
-                        <button type ="submit">
-                            <i class="fa fa-trash-o text-danger"> </i>
-                        </button> 
-                     </form> 
+                
+                <td>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <a asp-controller="Employees" asp-action="Edit" asp-route-id="@employee.Id">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    }
+                    </td>
+                <td>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <form asp-action="DeleteConfirmed" asp-route-id="@employee.Id">
+                            <button type="submit">
+                                <i class="fa fa-trash-o text-danger"> </i>
+                            </button>
+                        </form>
+                    }
                 </td>
             </tr>
             }

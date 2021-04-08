@@ -1,6 +1,6 @@
-﻿using WebMarketDomain.Entities.Interfaces;
+﻿using WebMarketDomain.Entityes.Interfaces;
 
-namespace WebMarketDomain.Entities.Base
+namespace WebMarketDomain.Entityes.Base
 {
     public abstract class Entity : IEntity
     {

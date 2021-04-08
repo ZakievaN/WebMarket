@@ -2,9 +2,9 @@
 using System.Linq;
 using WebMarket.Data;
 using WebMarketDomain;
-using WebMarketDomain.Entities;
+using WebMarketDomain.Entityes;
 
-namespace WebMarket.Infrastructure.Services
+namespace WebMarket.Infrastructure.Services.InMemory
 {
     public class InMemoryProductData : Interfaces.IProductData
     {
@@ -21,8 +21,8 @@ namespace WebMarket.Infrastructure.Services
         public IEnumerable<Product> GetProducts(ProductFilter filter = null)
         {
             var query = TestData.Products;
-            
-            if(filter?.SectionId is { } section_id)
+
+            if (filter?.SectionId is { } section_id)
             {
                 query = query.Where(product => product.SectionId == section_id);
             }

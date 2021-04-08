@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,7 @@ using WebMarket.Infrastructure.Conventions;
 using WebMarket.Infrastructure.Services.InMemory;
 using WebMarket.Infrastructure.Services.InSQL;
 using WebMarket.Infrastructure.Services.Interfaces;
+using WebMarketDomain.Entityes.Identity;
 
 namespace WebMarket
 {
@@ -24,6 +26,41 @@ namespace WebMarket
             );
 
             services.AddTransient<WebMarketDbInitializer>();
+
+            services.AddIdentity<User, Role>()
+                .AddEntityFrameworkStores<WebMarketDB>()
+                .AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(opt =>
+            {
+#if DEBUG
+                opt.Password.RequiredLength = 3;
+                opt.Password.RequireDigit = false;
+                opt.Password.RequireLowercase = false;
+                opt.Password.RequireUppercase = false;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequiredUniqueChars = 3;
+#endif
+                opt.User.RequireUniqueEmail = false;
+                opt.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+                opt.Lockout.AllowedForNewUsers = false;
+                opt.Lockout.MaxFailedAccessAttempts = 10;
+                opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+            });
+
+            services.ConfigureApplicationCookie(opt =>
+            {
+                opt.Cookie.Name = "GB.WebMarket";
+                opt.Cookie.HttpOnly = true;
+                opt.ExpireTimeSpan = TimeSpan.FromDays(10);
+
+                opt.LoginPath = "/Account/Login";
+                opt.LogoutPath = "/Account/Logout";
+                opt.AccessDeniedPath = "/Account/AccessDenied";
+
+                opt.SlidingExpiration = true;
+            });
 
             services.AddTransient<IEmployeesData, InMemoryEmployeesData>();
             services.AddScoped<IProductData, SqlProductData>();
@@ -53,6 +90,9 @@ namespace WebMarket
 
             //  Маршрутизация приложения (к какому ресурсу приложения обратился браузер)
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             //  Конфигурация адресов, на которые откправляются запросы и возвращаются ответы
             app.UseEndpoints(endpoints =>

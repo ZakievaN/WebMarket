@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebMarket.ViewModels;
+
 
 namespace WebMarket.Controllers
 {
@@ -6,7 +8,13 @@ namespace WebMarket.Controllers
     {
         public IActionResult Register()
         {
-            return View();
+            return View(new RegisterUserViewModel());
+        }
+
+        [HttpPost]
+        public IActionResult Register(RegisterUserViewModel model)
+        {
+            return View(model);
         }
 
         public IActionResult Login()

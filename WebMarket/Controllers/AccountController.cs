@@ -56,7 +56,7 @@ namespace WebMarket.Controllers
         [HttpGet]
         public IActionResult Login(string ReturnUrl)
         {
-            return View(new LoginViewModel {ReturnUrl = ReturnUrl});
+            return View(new LoginViewModel { ReturnUrl = ReturnUrl });
         }
 
         [HttpPost]
@@ -88,8 +88,10 @@ namespace WebMarket.Controllers
             return View(model);
         }
 
-        public IActionResult Logout()
+        [HttpGet]
+        public async Task<IActionResult> Logout()
         {
+            await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
 

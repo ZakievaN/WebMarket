@@ -10,6 +10,7 @@ using WebMarket.DAL.Context;
 using WebMarket.Data;
 using WebMarket.Infrastructure.Conventions;
 using WebMarket.Infrastructure.Services.InMemory;
+using WebMarket.Infrastructure.Services.InSQL;
 using WebMarket.Infrastructure.Services.Interfaces;
 
 namespace WebMarket
@@ -25,7 +26,7 @@ namespace WebMarket
             services.AddTransient<WebMarketDbInitializer>();
 
             services.AddTransient<IEmployeesData, InMemoryEmployeesData>();
-            services.AddTransient<IProductData, InMemoryProductData>();
+            services.AddScoped<IProductData, SqlProductData>();
 
 
             services

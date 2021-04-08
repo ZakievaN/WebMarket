@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using WebMarketDomain.Entityes;
+using WebMarketDomain.Entityes.Identity;
 
 namespace WebMarket.DAL.Context
 {
-    public class WebMarketDB : DbContext
+    public class WebMarketDB : IdentityDbContext<User, Role, string>
     {
         public DbSet<Product> Products { get; set; }
 

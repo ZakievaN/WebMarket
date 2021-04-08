@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebMarket.Infrastructure.Services.Interfaces;
 using WebMarket.Models;
 using WebMarket.ViewModels;
@@ -56,6 +57,7 @@ namespace WebMarket.Controllers
             });
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult DeleteConfirmed(int id)
         {
@@ -89,6 +91,7 @@ namespace WebMarket.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public IActionResult Edit(EmployeeViewModel model)
         {
             if (!ModelState.IsValid)

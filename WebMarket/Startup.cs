@@ -1,42 +1,47 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using WebMarket.DAL.Context;
+using WebMarket.Data;
 using WebMarket.Infrastructure.Conventions;
-using WebMarket.Infrastructure.Services;
+using WebMarket.Infrastructure.Services.InMemory;
+using WebMarket.Infrastructure.Services.InSQL;
 using WebMarket.Infrastructure.Services.Interfaces;
 
 namespace WebMarket
 {
     public record Startup(IConfiguration configuration)
     {
-        //private IConfiguration _configuration { get; }
-        //
-        //public Startup(IConfiguration Configuration)
-        //{
-        //    _configuration = Configuration;
-        //}
-
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<WebMarketDB>(opt => 
+            opt.UseSqlServer(configuration.GetConnectionString("Default"))
+            );
+
+            services.AddTransient<WebMarketDbInitializer>();
+
             services.AddTransient<IEmployeesData, InMemoryEmployeesData>();
-            services.AddTransient<IProductData, InMemoryProductData>();
+            services.AddScoped<IProductData, SqlProductData>();
 
 
             services
                 .AddControllersWithViews(
                     mvc =>
                     {
-                        //mvc.Conventions.Add(new ActionDescriptionAttribute("123"));
                         mvc.Conventions.Add(new ApplicationConvention());
                     })
                 .AddRazorRuntimeCompilation();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, WebMarketDbInitializer db)
         {
+            db.Initialize();
+
             //  Блок обрабатывающий исключения, если работа в режиме разработки
             if (env.IsDevelopment())
             {

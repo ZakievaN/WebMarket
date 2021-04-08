@@ -6,7 +6,7 @@ using WebMarket.Data;
 using WebMarket.Infrastructure.Services.Interfaces;
 using WebMarket.Models;
 
-namespace WebMarket.Infrastructure.Services
+namespace WebMarket.Infrastructure.Services.InMemory
 {
     public class InMemoryEmployeesData : IEmployeesData
     {
@@ -72,7 +72,7 @@ namespace WebMarket.Infrastructure.Services
             if (_employees.Contains(employee)) return; // в бд это не нужно будет
 
             var db_item = Get(employee.Id);
-            
+
             if (db_item is null) return;
 
             db_item.LastName = employee.LastName;

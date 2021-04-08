@@ -1,4 +1,4 @@
-﻿namespace WebMarketDomain.Entities.Interfaces
+﻿namespace WebMarketDomain.Entityes.Interfaces
 {
     public interface IOrderEntity : IEntity
     {

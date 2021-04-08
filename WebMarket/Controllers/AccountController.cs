@@ -18,6 +18,7 @@ namespace WebMarket.Controllers
             _signInManager = signInManager;
         }
 
+        [HttpGet]
         public IActionResult Register()
         {
             return View(new RegisterUserViewModel());
@@ -52,9 +53,39 @@ namespace WebMarket.Controllers
             return View(model);
         }
 
-        public IActionResult Login()
+        [HttpGet]
+        public IActionResult Login(string ReturnUrl)
         {
-            return View();
+            return View(new LoginViewModel {ReturnUrl = ReturnUrl});
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var login_result = await _signInManager.PasswordSignInAsync(
+                model.UserName,
+                model.Password,
+                model.IsRemember,
+
+#if DEBUG
+                false
+#else
+                true
+#endif
+                );
+
+            if (login_result.Succeeded)
+            {
+                return LocalRedirect(model.ReturnUrl);
+            }
+
+            ModelState.AddModelError("", "Неверное имя пользователя или пароль!");
+            return View(model);
         }
 
         public IActionResult Logout()

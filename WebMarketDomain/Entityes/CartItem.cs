@@ -1,10 +1,10 @@
 ﻿
 namespace WebMarketDomain.Entityes
 {
-    public class CardItem
+    public class CartItem
     {
         public int ProductId { get; set; }
 
-        public int Quality { get; set; } = 1;
+        public int Quantity { get; set; } = 1;
     }
 }

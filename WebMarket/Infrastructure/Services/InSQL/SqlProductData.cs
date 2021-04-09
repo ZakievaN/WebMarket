@@ -35,7 +35,7 @@ namespace WebMarket.Infrastructure.Services.InSQL
         {
             IQueryable<Product> query = _db.Products;
 
-            if (filter?.Ids.Length > 0)
+            if (filter?.Ids?.Length > 0)
             {
                 query = query.Where(product => filter.Ids.Contains(product.Id));
             }

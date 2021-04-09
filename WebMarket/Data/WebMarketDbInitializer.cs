@@ -12,19 +12,19 @@ namespace WebMarket.Data
     public class WebMarketDbInitializer
     {
         private readonly WebMarketDB _db;
-        private readonly UserManager<User> _userManger;
+        private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
         private ILogger<WebMarketDbInitializer> _logger;
 
         public WebMarketDbInitializer(
             WebMarketDB db, 
-            UserManager<User> userManger,
+            UserManager<User> userManager,
             RoleManager<Role> roleManager,
             ILogger<WebMarketDbInitializer> logger
             )
         {
             _db = db;
-            _userManger = userManger;
+            _userManager = userManager;
             _roleManager = roleManager;
             _logger = logger;
         }
@@ -114,49 +114,47 @@ namespace WebMarket.Data
         {
             _logger.LogInformation("Инициализация БД системы Identity");
 
-            async Task ChechRole(string RoleName)
+            async Task CheckRole(string RoleName)
             {
-                if (await _roleManager.RoleExistsAsync(RoleName))
+                if (!await _roleManager.RoleExistsAsync(RoleName))
                 {
-                    _logger.LogInformation($"Роль {RoleName} отсутствует, создается..");
-                    
+                    _logger.LogInformation("Роль {0} отсутствует. Создаю...", RoleName);
                     await _roleManager.CreateAsync(new Role { Name = RoleName });
-                    
-                    _logger.LogInformation($"Роль {RoleName} создана успешно");
+                    _logger.LogInformation("Роль {0} создана успешно", RoleName);
                 }
             }
 
-            await ChechRole(Role.Administartor);
-            await ChechRole(Role.Users);
+            await CheckRole(Role.Administrator);
+            await CheckRole(Role.Users);
 
-            if (await _userManger.FindByNameAsync(User.Administartor) is null)
+            if (await _userManager.FindByNameAsync(User.Administrator) is null)
             {
-                _logger.LogInformation($"Учетная запись администратора отсутствует, создается..");
+                _logger.LogInformation("Учётная запись администратора в БД отсутствует. Создаю...");
 
                 var admin = new User
                 {
-                    UserName = User.Administartor
+                    UserName = User.Administrator
                 };
 
-                var creation_result = await _userManger.CreateAsync(admin, User.DefaultAdminPassword);
+                var creation_result = await _userManager.CreateAsync(admin, User.DefaultAdminPassword);
                 if (creation_result.Succeeded)
                 {
-                    _logger.LogInformation($"Учетная запись администратора создана успешно");
-                    
-                    await _userManger.AddToRoleAsync(admin, Role.Administartor);
-                    
-                    _logger.LogInformation($"К учетной записи администратора добавлена роль администратора");
+                    _logger.LogInformation("Учётная запись администратора создана успешно.");
+
+                    await _userManager.AddToRoleAsync(admin, Role.Administrator);
+
+                    _logger.LogInformation("Учётная запись администратора  наделена ролью администратора.");
                 }
                 else
                 {
                     var errors = creation_result.Errors.Select(e => e.Description).ToArray();
+                    _logger.LogInformation("Учётная запись администратора создана с ошибкой {0}", string.Join(",", errors));
 
-                    _logger.LogInformation($"Учетная запись администратора создана с ошибкой {string.Join(", ", errors)}");
-
-                    throw new InvalidOperationException($"Ошибка при создании учетной записи администратора: {string.Join(", ", errors)}");
+                    throw new InvalidOperationException($"Ошибка при создании учётной записи администратора: {string.Join(",", errors)}");
                 }
             }
-            _logger.LogInformation("Инициализация БД системы Identity выполнена успешно");
+
+            _logger.LogInformation("Инициализация БД системы Identity выполнена");
         }
     }
 }

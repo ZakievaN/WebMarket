@@ -4,18 +4,25 @@ using Microsoft.AspNetCore.Mvc;
 
 using WebMarketDomain.Entityes.Identity;
 using WebMarket.ViewModels;
+using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace WebMarket.Controllers
 {
     public class AccountController : Controller
     {
-        public UserManager<User> _userManager;
-        public SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
+        private readonly ILogger<AccountController> _logger;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(
+            UserManager<User> userManager, 
+            SignInManager<User> signInManager,
+            ILogger<AccountController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -37,15 +44,26 @@ namespace WebMarket.Controllers
                 UserName = model.UserName
             };
 
+            _logger.LogInformation($"Регистрация пользователя {user.UserName}");
+
             var registration_result = await _userManager.CreateAsync(user, model.Password);
             if (registration_result.Succeeded)
             {
+                _logger.LogInformation($"Пользователь {user.UserName} успешно зарегистрирован");
+
                 await _userManager.AddToRoleAsync(user, Role.Users);
+
+                _logger.LogInformation($"Пользователь {user.UserName} наделен ролью {Role.Users}");
 
                 await _signInManager.SignInAsync(user, false);
 
+                _logger.LogInformation($"Пользователь {user.UserName} вошел в систему");
+
                 return RedirectToAction("Index", "Home");
             }
+
+            _logger.LogWarning($"Ошибка при регистрации пользователя {user.UserName} с ошибкой " +
+                $"{string.Join(", ", registration_result.Errors.Select(e => e.Description))}");
 
             foreach (var error in registration_result.Errors)
             {
@@ -83,8 +101,13 @@ namespace WebMarket.Controllers
 
             if (login_result.Succeeded)
             {
+                _logger.LogInformation($"Пользователь {model.UserName} вошел в систему");
+
                 return LocalRedirect(model.ReturnUrl ?? "/");
             }
+
+            _logger.LogWarning($"Ошибка авторизации пользователя {model.UserName} с неверным логином/паролем");
+
 
             ModelState.AddModelError("", "Неверное имя пользователя или пароль!");
             return View(model);
@@ -93,7 +116,12 @@ namespace WebMarket.Controllers
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
+            var user_name = User.Identity.Name;
+
             await _signInManager.SignOutAsync();
+
+            _logger.LogInformation($"Пользователь {user_name} вышел из системы");
+
             return RedirectToAction("Index", "Home");
         }
 

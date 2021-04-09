@@ -57,7 +57,7 @@ namespace WebMarket.Controllers
             });
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public IActionResult DeleteConfirmed(int id)
         {
@@ -91,7 +91,7 @@ namespace WebMarket.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "Administrator")]
         public IActionResult Edit(EmployeeViewModel model)
         {
             if (!ModelState.IsValid)

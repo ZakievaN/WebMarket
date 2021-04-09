@@ -1,4 +1,5 @@
-﻿@model WebMarket.Models.Employee
+﻿@using WebMarketDomain.Entityes.Identity
+@model WebMarket.Models.Employee
 
 <!DOCTYPE html>
 @{
@@ -45,7 +46,7 @@
 
         <p>
 
-            @if (User.IsInRole("admin"))
+            @if (User.IsInRole(Role.Administrator))
             {
                 <a asp-action="Delete" asp-route-Id="@Model.Id" class="btn btn-danger"> Удалить </a>
 

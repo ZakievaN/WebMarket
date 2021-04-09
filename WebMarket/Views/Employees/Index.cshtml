@@ -1,4 +1,5 @@
-﻿@model IEnumerable<WebMarket.Models.Employee>
+﻿@using WebMarketDomain.Entityes.Identity
+@model IEnumerable<WebMarket.Models.Employee>
 
 @{
     ViewData["Title"] = "Index";
@@ -8,11 +9,11 @@
 
     <h3> Сотрудники </h3>
 
-    <hr/>
+    <hr />
 
     <a asp-action="Edit" class="btn btn-primary">Создать</a>
 
-    <hr/>
+    <hr />
 
     <table class="table">
         <thead>
@@ -28,33 +29,33 @@
         <tbody>
             @foreach (var employee in Model)
             {
-            <tr>
-                <td>@employee.Id</td>
-                <td>@employee.LastName</td>
-                <td>@employee.FirstName</td>
-                <td>@employee.Patronymic</td>
-                <td>@employee.Age</td>
-                <td><a asp-controller="Employees" asp-action="Details" asp-route-id="@employee.Id">Детали</a></td>
-                
-                <td>
-                    @if (User.IsInRole("admin"))
-                    {
-                        <a asp-controller="Employees" asp-action="Edit" asp-route-id="@employee.Id">
-                            <i class="fa fa-edit"></i>
-                        </a>
-                    }
+                <tr>
+                    <td>@employee.Id</td>
+                    <td>@employee.LastName</td>
+                    <td>@employee.FirstName</td>
+                    <td>@employee.Patronymic</td>
+                    <td>@employee.Age</td>
+                    <td><a asp-controller="Employees" asp-action="Details" asp-route-id="@employee.Id">Детали</a></td>
+
+                    <td>
+                        @if (User.IsInRole(Role.Administrator))
+                        {
+                            <a asp-controller="Employees" asp-action="Edit" asp-route-id="@employee.Id">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        }
                     </td>
-                <td>
-                    @if (User.IsInRole("admin"))
-                    {
-                        <form asp-action="DeleteConfirmed" asp-route-id="@employee.Id">
-                            <button type="submit">
-                                <i class="fa fa-trash-o text-danger"> </i>
-                            </button>
-                        </form>
-                    }
-                </td>
-            </tr>
+                    <td>
+                        @if (User.IsInRole(Role.Administrator))
+                        {
+                            <form asp-action="DeleteConfirmed" asp-route-id="@employee.Id">
+                                <button type="submit">
+                                    <i class="fa fa-trash-o text-danger"> </i>
+                                </button>
+                            </form>
+                        }
+                    </td>
+                </tr>
             }
         </tbody>
 
@@ -62,7 +63,7 @@
 
     <p>
 
-        <a asp-controller ="Home" asp-action="Index" >Домой</a>
+        <a asp-controller="Home" asp-action="Index">Домой</a>
 
     </p>
 

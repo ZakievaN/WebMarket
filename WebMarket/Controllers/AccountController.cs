@@ -6,9 +6,11 @@ using WebMarketDomain.Entityes.Identity;
 using WebMarket.ViewModels;
 using Microsoft.Extensions.Logging;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebMarket.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -26,12 +28,14 @@ namespace WebMarket.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View(new RegisterUserViewModel());
         }
 
         [HttpPost, ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterUserViewModel model)
         {
             if (!ModelState.IsValid)
@@ -74,12 +78,14 @@ namespace WebMarket.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login(string ReturnUrl)
         {
             return View(new LoginViewModel { ReturnUrl = ReturnUrl });
         }
 
-        [HttpPost]
+        [HttpPost, ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)

@@ -9,11 +9,14 @@
 
     <h3> Сотрудники </h3>
 
-    <hr />
-
-    <a asp-action="Edit" class="btn btn-primary">Создать</a>
-
-    <hr />
+    
+    @if (User.IsInRole(Role.Administrator))
+    {
+        <hr />
+            <a asp-action="Edit" class="btn btn-primary">Создать</a>
+        <hr />
+    }
+    
 
     <table class="table">
         <thead>

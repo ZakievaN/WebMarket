@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebMarket.Infrastructure.Services.Interfaces;
 using WebMarket.Models;
 using WebMarket.ViewModels;
+using WebMarketDomain.Entityes.Identity;
 
 namespace WebMarket.Controllers
 {
@@ -15,16 +16,24 @@ namespace WebMarket.Controllers
             _employeesData = employeesData;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return View(_employeesData.Get());
         }
 
+        [HttpGet]
+        [Authorize]
         public IActionResult Employees()
         {
             return View(_employeesData.Get());
         }
 
+        [HttpGet]
+        [Authorize(Roles = Role.Administrator)]
+        public IActionResult Create() => View("Edit", new EmployeeViewModel());
+
+        [HttpGet]
         public IActionResult Details(int id)
         {
             var employee = _employeesData.Get(id);
@@ -36,6 +45,8 @@ namespace WebMarket.Controllers
             return View(employee);
         }
 
+        [HttpGet]
+        [Authorize(Roles = Role.Administrator)]
         public IActionResult Delete(int id)
         {
             if (id == 0) return BadRequest();
@@ -57,7 +68,7 @@ namespace WebMarket.Controllers
             });
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = Role.Administrator)]
         [HttpPost]
         public IActionResult DeleteConfirmed(int id)
         {
@@ -66,6 +77,7 @@ namespace WebMarket.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = Role.Administrator)]
         public IActionResult Edit(int? id)
         {
             if (id is null)
@@ -91,7 +103,7 @@ namespace WebMarket.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = Role.Administrator)]
         public IActionResult Edit(EmployeeViewModel model)
         {
             if (!ModelState.IsValid)

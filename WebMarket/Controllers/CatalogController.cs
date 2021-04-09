@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using WebMarket.Infrastructure.Mapping;
 using WebMarket.Infrastructure.Services.Interfaces;
 using WebMarket.ViewModels;
 using WebMarketDomain;
@@ -31,16 +32,21 @@ namespace WebMarket.Controllers
                 BrandId = brandId,
                 Products = products
                     .OrderBy(p => p.Order)
-                    .Select(p => new ProductViewModel
-                    {
-                        Id = p.Id,
-                        Name = p.Name,
-                        Price = p.Price,
-                        ImageUrl = p.ImageUrl
-                    })
+                    .ToView()
             };
 
             return View(catalogViewModel);
+        }
+
+        public IActionResult Details(int id)
+        {
+            var product = _ProductData.GetProductById(id);
+            if (product is null)
+            {
+                return NotFound();
+            }
+
+            return View(product.ToView());
         }
     }
 }

@@ -17,6 +17,15 @@ namespace WebMarket.Infrastructure.Services.InSQL
             _db = db;
         }
 
+        public Product GetProductById(int id)
+        {
+            return
+            _db.Products
+                .Include(p => p.Section)
+                .Include(p => p.Brand)
+                .FirstOrDefault(p => p.Id == id);
+        }
+
         IEnumerable<Brand> IProductData.GetBrands()
         {
             return _db.Brands.Include(s => s.Products);

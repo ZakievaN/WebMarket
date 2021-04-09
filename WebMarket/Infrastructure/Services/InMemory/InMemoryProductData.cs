@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using WebMarket.Data;
+using WebMarket.Infrastructure.Services.Interfaces;
 using WebMarketDomain;
 using WebMarketDomain.Entityes;
 
 namespace WebMarket.Infrastructure.Services.InMemory
 {
-    public class InMemoryProductData : Interfaces.IProductData
+    public class InMemoryProductData : IProductData
     {
         public IEnumerable<Brand> GetBrands()
         {
@@ -35,5 +36,9 @@ namespace WebMarket.Infrastructure.Services.InMemory
             return query;
         }
 
+        public Product GetProductById(int id)
+        {
+            return TestData.Products.FirstOrDefault(p => p.Id == id);
+        }
     }
 }

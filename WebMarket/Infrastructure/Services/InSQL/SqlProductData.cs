@@ -33,7 +33,9 @@ namespace WebMarket.Infrastructure.Services.InSQL
 
         IEnumerable<Product> IProductData.GetProducts(ProductFilter filter)
         {
-            IQueryable<Product> query = _db.Products;
+            IQueryable<Product> query = _db.Products
+                .Include(p => p.Section)
+                .Include(p => p.Brand);
 
             if (filter?.Ids?.Length > 0)
             {

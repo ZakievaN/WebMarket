@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Linq;
 using WebMarket.Infrastructure.Services.Interfaces;
+using WebMarket.ViewModels;
+using WebMarketDomain.Entityes;
 using WebMarketDomain.Entityes.Identity;
 
 namespace WebMarket.Areas.Admin.Controllers
@@ -22,14 +26,57 @@ namespace WebMarket.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = Role.Administrator)]
         public IActionResult Edit(int id)
         {
             var product = _productData.GetProductById(id);
+            
             if (product == null)
             {
                 return NotFound();
             }
-            return View(product);
+
+            SelectList brands = new SelectList(_productData.GetBrands(), "Id", "Name", product.BrandId);
+
+            SelectList sections = new SelectList(_productData.GetSections(), "Id", "Name", product.SectionId);
+
+            ViewBag.Brands = brands;
+            ViewBag.Sections = sections;
+
+            return View(new ProductViewModel
+            {
+                Id = product.Id,
+                BrandId = product.BrandId,
+                SectionId = product.SectionId,
+                Price = product.Price,
+                ImageUrl = product.ImageUrl,
+                Name = product.Name
+            });
+        }
+
+        [HttpPost]
+        [Authorize(Roles = Role.Administrator)]
+        public IActionResult Edit(ProductViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var product = new Product
+            {
+                Id = model.Id,
+                Name = model.Name,
+                Price = model.Price,
+                ImageUrl = model.ImageUrl,
+                BrandId = model.BrandId,
+                SectionId = model.SectionId
+            };
+
+            _productData.Update(product);
+
+
+            return RedirectToAction("Index");
         }
 
         [HttpGet]

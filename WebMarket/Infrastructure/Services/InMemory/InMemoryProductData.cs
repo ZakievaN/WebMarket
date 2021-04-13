@@ -40,5 +40,18 @@ namespace WebMarket.Infrastructure.Services.InMemory
         {
             return TestData.Products.FirstOrDefault(p => p.Id == id);
         }
+
+        public void Update(Product product)
+        {
+            Product productFinder = GetProductById(product.Id);
+
+            if (product == null && productFinder == null)
+            {
+                throw new System.Exception("Обновляемый товар null!");
+            }
+
+            productFinder.Name = product.Name;
+            productFinder.Price = product.Price;
+        }
     }
 }

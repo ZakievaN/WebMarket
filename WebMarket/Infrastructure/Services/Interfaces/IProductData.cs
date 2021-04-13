@@ -13,5 +13,7 @@ namespace WebMarket.Infrastructure.Services.Interfaces
         IEnumerable<Product> GetProducts( ProductFilter filter = null);
 
         Product GetProductById(int id);
+
+        void Update(Product product);
     }
 }

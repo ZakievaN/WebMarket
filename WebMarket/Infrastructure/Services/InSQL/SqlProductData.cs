@@ -26,6 +26,12 @@ namespace WebMarket.Infrastructure.Services.InSQL
                 .FirstOrDefault(p => p.Id == id);
         }
 
+        public void Update(Product product)
+        {
+            _db.Products.Update(product);
+            _db.SaveChanges();
+        }
+
         IEnumerable<Brand> IProductData.GetBrands()
         {
             return _db.Brands.Include(s => s.Products);

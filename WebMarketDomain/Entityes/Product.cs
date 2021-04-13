@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using WebMarketDomain.Entityes;
 using WebMarketDomain.Entityes.Base;
 using WebMarketDomain.Entityes.Interfaces;
 

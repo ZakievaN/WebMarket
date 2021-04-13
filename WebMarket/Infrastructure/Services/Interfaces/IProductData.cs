@@ -15,5 +15,7 @@ namespace WebMarket.Infrastructure.Services.Interfaces
         Product GetProductById(int id);
 
         void Update(Product product);
+
+        bool Delete(int id);
     }
 }

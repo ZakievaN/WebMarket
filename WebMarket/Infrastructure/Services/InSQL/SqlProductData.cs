@@ -17,6 +17,20 @@ namespace WebMarket.Infrastructure.Services.InSQL
             _db = db;
         }
 
+        public bool Delete(int id)
+        {
+            Product product = GetProductById(id);
+
+            if (product is null)
+            { 
+                return false;
+            }
+
+            _db.Products.Remove(product);
+            _db.SaveChanges();
+            return true;
+        }
+
         public Product GetProductById(int id)
         {
             return

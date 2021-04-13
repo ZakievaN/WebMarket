@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Linq;
 using WebMarket.Infrastructure.Services.Interfaces;
 using WebMarket.ViewModels;
 using WebMarketDomain.Entityes;
@@ -87,7 +86,23 @@ namespace WebMarket.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            return View(product);
+            return View(new ProductViewModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                ImageUrl = product.ImageUrl,
+                BrandId = product.BrandId,
+                SectionId = product.SectionId
+            });
+        }
+
+        [Authorize(Roles = Role.Administrator)]
+        [HttpPost]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            _productData.Delete(id);
+            return RedirectToAction("Index");
         }
     }
 }

@@ -25,12 +25,12 @@ namespace WebMarket.Infrastructure.Services.InMemory
 
             if (filter?.SectionId is { } section_id)
             {
-                query = query.Where(product => product.SectionId == section_id);
+                query = query.Where(product => product.SectionId == section_id).ToList();
             }
 
             if (filter?.BrandId is { } brand_id)
             {
-                query = query.Where(product => product.BrandId == brand_id);
+                query = query.Where(product => product.BrandId == brand_id).ToList();
             }
 
             return query;
@@ -52,6 +52,16 @@ namespace WebMarket.Infrastructure.Services.InMemory
 
             productFinder.Name = product.Name;
             productFinder.Price = product.Price;
+        }
+
+        public bool Delete(int id)
+        {
+            var product = GetProductById(id);
+            if (product is null)
+            {
+                return false;
+            }
+            return TestData.Products.Remove(product);
         }
     }
 }

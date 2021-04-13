@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using WebMarketDomain;
-using WebMarketDomain.Entities;
+using WebMarketDomain.Entityes;
 
 namespace WebMarket.Infrastructure.Services.Interfaces
 {
@@ -11,5 +11,11 @@ namespace WebMarket.Infrastructure.Services.Interfaces
         IEnumerable<Brand> GetBrands();
 
         IEnumerable<Product> GetProducts( ProductFilter filter = null);
+
+        Product GetProductById(int id);
+
+        void Update(Product product);
+
+        bool Delete(int id);
     }
 }

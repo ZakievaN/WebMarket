@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.31105.61
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebMarket", "WebMarket\WebMarket.csproj", "{FBDA44BE-94B9-4DC3-9880-FC8C7C804154}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebMarketDomain", "WebMarketDomain\WebMarketDomain.csproj", "{C371B238-D217-4826-9579-1CF2CE7FCDDB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebMarketDomain", "WebMarketDomain\WebMarketDomain.csproj", "{C371B238-D217-4826-9579-1CF2CE7FCDDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebMarket.DAL", "WebMarket.DAL\WebMarket.DAL.csproj", "{EE53057D-1BF2-4A65-8663-37D1F48FBCAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{C371B238-D217-4826-9579-1CF2CE7FCDDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C371B238-D217-4826-9579-1CF2CE7FCDDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C371B238-D217-4826-9579-1CF2CE7FCDDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE53057D-1BF2-4A65-8663-37D1F48FBCAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE53057D-1BF2-4A65-8663-37D1F48FBCAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE53057D-1BF2-4A65-8663-37D1F48FBCAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE53057D-1BF2-4A65-8663-37D1F48FBCAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

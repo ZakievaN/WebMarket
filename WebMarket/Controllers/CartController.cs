@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using WebMarket.Infrastructure.Services.Interfaces;
+using WebMarket.ViewModels;
 
 namespace WebMarket.Controllers
 {
@@ -14,7 +17,10 @@ namespace WebMarket.Controllers
 
         public IActionResult Index()
         {
-            return View(_cartServices.GetViewModel());
+            var model = new CartOrderViewModel {
+                Cart = _cartServices.GetViewModel(),
+                };
+            return View(model);
         }
 
         public IActionResult Add(int id)
@@ -39,6 +45,33 @@ namespace WebMarket.Controllers
         {
             _cartServices.Clear();
             return RedirectToAction(nameof(Index));
+        }
+
+        [Authorize]
+        public async Task<IActionResult> CheckOut(OrderViewModel orderModel, [FromServices] IOrderService orderService)
+        {
+            if (!ModelState.IsValid)
+                return View(nameof(Index), new CartOrderViewModel
+                {
+                    Cart = _cartServices.GetViewModel(),
+                    Order = orderModel
+                });
+
+            var order = await orderService.CreateOrder(
+                User.Identity!.Name,
+                _cartServices.GetViewModel(),
+                orderModel
+                );
+
+            _cartServices.Clear();
+
+            return RedirectToAction(nameof(OrderConfirmed), new { order.Id });
+        }
+
+        public IActionResult OrderConfirmed(int id)
+        {
+            ViewBag.OrderId = id;
+            return View();
         }
     }
 }

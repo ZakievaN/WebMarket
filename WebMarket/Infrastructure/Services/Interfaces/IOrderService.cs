@@ -11,6 +11,6 @@ namespace WebMarket.Infrastructure.Services.Interfaces
 
         Task<Order> GetOrderById(int id);
 
-        Task<Order> CreateOrder(string UserName, CartViewModel cart, OrderViewModel orderView)
+        Task<Order> CreateOrder(string UserName, CartViewModel cart, OrderViewModel orderView);
     }
 }

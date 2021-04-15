@@ -66,6 +66,7 @@ namespace WebMarket
             services.AddTransient<IEmployeesData, InMemoryEmployeesData>();
             services.AddScoped<IProductData, SqlProductData>();
             services.AddScoped<ICartServices, InCookiesCartServices>();
+            services.AddScoped<IOrderService, SqlOrderService>();
 
 
             services

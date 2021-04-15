@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebMarketDomain.Entityes;
 using WebMarketDomain.Entityes.Identity;
+using WebMarketDomain.Entityes.Orders;
 
 namespace WebMarket.DAL.Context
 {
@@ -12,6 +13,8 @@ namespace WebMarket.DAL.Context
         public DbSet<Brand> Brands { get; set; }
 
         public DbSet<Section> Sections { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
 
         public WebMarketDB(DbContextOptions<WebMarketDB> options) : base(options)
         {

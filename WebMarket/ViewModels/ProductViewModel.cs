@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using WebMarketDomain.Entityes;
 
 namespace WebMarket.ViewModels
 {
@@ -11,6 +13,11 @@ namespace WebMarket.ViewModels
         public string ImageUrl { get; set; }
 
         public decimal Price { get; set; }
+
+        public int SectionId { get; set; }
+
+        public int? BrandId { get; set; }
+
     }
 
     public class CatalogViewModel

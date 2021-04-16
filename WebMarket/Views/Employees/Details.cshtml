@@ -1,4 +1,5 @@
-﻿@model WebMarket.Models.Employee
+﻿@using WebMarketDomain.Entityes.Identity
+@model WebMarket.Models.Employee
 
 <!DOCTYPE html>
 @{
@@ -44,10 +45,13 @@
         </form>
 
         <p>
-            <a asp-action="Delete" asp-route-Id="@Model.Id" class="btn btn-danger"> Удалить </a>
 
-            <a asp-action="Edit" asp-route-Id="@Model.Id" class="btn btn-default"> Редактировать </a>
+            @if (User.IsInRole(Role.Administrator))
+            {
+                <a asp-action="Delete" asp-route-Id="@Model.Id" class="btn btn-danger"> Удалить </a>
 
+                <a asp-action="Edit" asp-route-Id="@Model.Id" class="btn btn-default"> Редактировать </a>                
+            }
             <a asp-action="Index" class="btn btn-info">Назад к списку</a>
 
         </p>
